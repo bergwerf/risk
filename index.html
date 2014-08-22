@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <link href="favicon.png" type="image/png" rel="shortcut icon"/>
+        <title>Risk</title>
+        <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" />
+        <link rel='stylesheet' href='css/risk.css' type='text/css' media='screen'>
+        <link rel='stylesheet' href='css/classes.css' type='text/css' media='screen'>
+        <link rel='stylesheet' href='css/dialogs.css' type='text/css' media='screen'>
+        <link rel='stylesheet' href='http://hermanbergwerf.com/css/classes.css' type='text/css' media='screen'>
+        <script src='lib/jquery-1.9.1.min.js'></script>
+        <script src='lib/raphael-min.js'></script>
+        <script src='lib/raphael-group.js'></script>
+        <script src='js/utility.js'></script>
+        <script src='js/dialogs.js'></script>
+        <script src='js/territory.js'></script>
+        <script src='js/card.js'></script>
+        <script src='js/dice.js'></script>
+        <script src='js/world.js'></script>
+        <script src='js/sound.js'></script>
+        <script src='js/map.js'></script>
+        <script src='js/risk.js'></script>
+        <script src='js/human.js'></script>
+        <script src='js/setup.js'></script>
+        <script src='js/main.js'></script>
+    </head>
+    <body>
+		<div id='start' class='center'>
+			<div class='centerPoint'>
+				<div id='startLeft'>
+					<div id='startButton' class='blackbox active'>Start</div>
+					<div class='blackbox active' onclick="playClickSound(); showDialog('#rulesDialog');">Rules</div>
+					<div class='blackbox active' onclick="playClickSound(); showDialog('#aboutDialog');">About</div>
+				</div>
+				<div id='startRight'>RISK</div>
+			</div>
+		</div>
+		<div id='setup' class='center'>
+			<table id='players' class='blackbox'>
+				<thead>
+					<tr>
+						<td style='width: 35%'>Player</td>
+						<td style='width: 20%'>Color</td>
+						<td style='width: 35%'>Name</td>
+						<td style='width: 10%'></td>
+					</tr>
+				</thead>
+				<tbody><tr><td colspan='4'><div id='addPlayer' class='blackbox active'>+</div></td></tr></tbody>
+			</table>
+			<div id='mission' class='blackbox choice' style='display: none;'>
+				<span></span>
+				<div class='blackbox active left'>‹</div>
+				<div class='blackbox active right'>›</div>
+			</div>
+			<div class='buttonrow wide'>
+				<div id='setupButton' class='blackbox active'>Setup</div>
+				<div id='cancelSetupButton' class='blackbox active'>Cancel</div>
+			</div>
+		</div>
+		<div id='board' class='center' style='display: none;'>
+			<div id='map'></div>
+			<div id='control'>
+				<div id='messageBox' style='text-align: left; margin: 0;'></div>
+				<div id='soundToggleButton'><img width='20px' height='20px' src='img/sound_on.png'/></div>
+				<div id='menuButton' class='controlButton active'>Menu</div>
+				<div id='cardsButton' class='controlButton inactive'>Cards</div>
+				<div id='endButton' class='controlButton active' style='display: none;'>End Turn</div>
+				<div id='retreatButton' class='controlButton active' style='display: none;'>Retreat</div>
+				<div id='throwButton' class='controlButton active' style='display: none;'>Roll</div>
+				<div id='skipButton' class='controlButton active' style='display: none;'>Skip</div>
+				<div id='okButton' class='controlButton active' style='display: none;'>OK</div>
+				<div id='queue'></div>
+			</div>
+		</div>
+		<div id='dialogLayer' class='selectable' style='display: none; opacity: 0;'>
+			<div id='dialogBox' class='selectable centerPoint'>
+				<div id='rulesDialog' class='selectable dialog' style='display: none;'>
+					<span class='title'>Rules</span>
+					<div class='selectable scrollarea'>
+						<span class='selectable'>
+<h2 id="setup">Setup</h2>
+<p>Each player has to choose a unique name and color.</p>
+<p>You can also select a mission:</p>
+<ul>
+<li>Dominate the World</li>
+<li>Capture Europe, Australia and one other continent</li>
+<li>Capture Europe, South America and one other continent</li>
+<li>Capture North America and Africa</li>
+<li>Capture North America and Australia</li>
+<li>Capture Asia and South America</li>
+<li>Capture Asia and Africa</li>
+<li>Capture 24 territories</li>
+<li>Capture 18 territories and occupy each with two troops</li>
+<li>Destroy all armies of a specific color</li>
+</ul>
+<h2 id="prepare">Prepare</h2>
+<ol>
+<li>Choose terretories using turns</li>
+<li>Recieve armies and devide them over your contries<ul>
+<li>2 players: 40 armies</li>
+<li>3 players: 35 armies</li>
+<li>4 players: 30 armies</li>
+<li>5 players: 25 armies</li>
+<li>6 players: 20 armies</li>
+</ul>
+</li>
+</ol>
+<h2 id="play">Play</h2>
+<ol>
+<li>Recieve new armies and devide them over your contries<ul>
+<li>Divide number of territories by 3, floor fraction</li>
+<li>Get bonus by occupying a whole continent</li>
+</ul>
+</li>
+<li>Get more armies by trading cards<ul>
+<li>If you have 5 or 6 cards, you have to trade</li>
+<li>Possible combinations<ol>
+<li>3 cards of same design (Infantry, Cavalry, or Artillery)</li>
+<li>1 each of 3 designs (Infantry + Cavalry + Artillery)</li>
+<li>Any 2 plus a "wild" card</li>
+</ol>
+</li>
+<li>Worth:<ul>
+<li>1st set in game: 4 armies</li>
+<li>2nd-5th set in game: each time +2</li>
+<li>6th set in game: 15 armies</li>
+<li>7th+ set in game: each time +5</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Attack opponents<ul>
+<li>You can only attack from a territory with at least 2 armies</li>
+<li>Roll dice<ul>
+<li>If you have 2 armies, you roll one dice </li>
+<li>If you have 3 armies, you roll two dice</li>
+<li>If you have 4+ armies, you roll three dice</li>
+<li>If your opponent has 1 army, he/she rolls one dice</li>
+<li>If your opponent has 2+ armies, he/she rolls two dice</li>
+</ul>
+</li>
+<li>Dicide winner<ol>
+<li>Sort results in descending order</li>
+<li>Compare the first (and, if present) second result</li>
+<li>A higher dice wins from a lower dice, the loser loses one army</li>
+<li>In case of a tie, the defender always wins</li>
+</ol>
+</li>
+<li>Retreat or roll again</li>
+</ul>
+</li>
+<li>If you eliminate an opponent you get all his/her cards<ul>
+<li>If this gives you to 6+ cards you have to trade until your cards are reduced to 4-2</li>
+</ul>
+</li>
+<li>Fortifying your position by moving armies from one to another territory</li>
+<li>Recieve 1 card if you have captured at least 1 territory</li>
+<li>Complete your mission</li>
+</ol>
+						</span>
+					</div>
+					<div class='buttonrow base'>
+						<div class='ok dialogButton active' onclick='playClickSound(); hideDialogs();'>OK</div>
+					</div>
+				</div>
+				<div id='aboutDialog' class='selectable dialog' style='display: none;'>
+					<span class='title'>About</span>
+					<div class='selectable scrollarea'>
+						<span class='selectable'>This game is coded by <a class='link'  target='_blank' href="http://hermanbergwerf.com">Herman Bergwerf</a> using RaphaelJS, jQuery, CSS3 and HTML5.<br>
+						All music is composed by <a class='link' target='_blank' href='http://www.youtube.com/user/philibbergwerf'>Philip Bergwerf</a>.
+						</span>
+					</div>
+					<div class='buttonrow base'>
+						<div class='ok dialogButton active' onclick='playClickSound(); hideDialogs();'>OK</div>
+					</div>
+				</div>
+				<div id='cardsDialog' class='dialog' style='display: none;'>
+					<span class='title'>Cards</span>
+					<div class='table'>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+						<div class='cell card'></div>
+					</div>
+					<div class='buttonrow base'>
+						<span class='message'></span>
+						<div class='ok dialogButton active'>OK</div>
+						<div class='trade dialogButton inactive'>Trade</div>
+					</div>
+				</div>
+				<div id='divideDialog' class='dialog' style='display: none;'>
+					<span class='title'>Divide Armies</span>
+					<span class='source territory'></span>
+					<span class='target territory'></span>
+					<span class='arrow'>→</span>
+					<input type='text' class='source' onkeypress="return isNumberKey(event)"></input>
+					<input type='text' class='target' onkeypress="return isNumberKey(event)"></input>
+					<div class='buttonrow base'>
+						<div class='ok dialogButton active'>OK</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<audio id='music' autoplay='autoplay' loop='loop'>
+			<source id='musicMP3' src='snd/music/start.mp3' type='audio/mpeg'/>
+			<source id='musicOGG' src='snd/music/start.ogg' type='audio/ogg'/>
+		</audio>
+    </body>
+    </body>
+</html>

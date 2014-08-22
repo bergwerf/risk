@@ -1,0 +1,216 @@
+::-webkit-scrollbar
+{
+	width: 10px;
+	height: 10px;
+}
+
+
+::-webkit-scrollbar-thumb
+{
+    background: rgb(10, 10, 10); 
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-corner
+{
+	opacity: 0.0;
+}
+
+body
+{
+	z-index: 0;
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	font-family: 'Open Sans', sans-serif;
+}
+
+div:not(.selectable), span:not(.selectable), img, text, table, path, circle, rect, .blackbox
+{
+	cursor: default;
+	
+	-webkit-touch-callout: none;
+	  -webkit-user-select: none;
+	   -khtml-user-select: none;
+	     -moz-user-select: none;
+	      -ms-user-select: none;
+	          user-select: none;
+}
+
+#start
+{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+#startLeft
+{
+	position: absolute;
+	top: -60px;
+	bottom: -55px;
+	left: -550px;
+	width: 250px;
+}
+
+#startLeft .blackbox
+{
+	width: 100%;
+}
+
+#startRight
+{
+	position: absolute;
+	top: 0;
+	left: -250px;
+	bottom: 0;
+	line-height: 0;
+	width: 850px;
+	font-size: 350px;
+	font-family: serif;
+	font-weight: bold;
+	color: rgb(60, 30, 0);
+	color: rgba(60, 30, 0, 0.5);
+	text-shadow: 0px 0px 50px #000;
+}
+
+#title
+{
+	text-align: center;
+	font-size: 300px;
+	height: 300px;
+	margin-bottom: 50px;
+	color: rgb(60, 30, 0);
+	color: rgba(60, 30, 0, 0.5);
+	text-shadow: 0px 0px 50px #000;
+}
+
+#setup
+{
+	top: 50px;
+	width: 550px;
+}
+
+#players
+{
+	width: 530px;
+	
+	-webkit-transition: background-color 1.0s ease-in;
+	   -moz-transition: background-color 1.0s ease-in;
+	     -o-transition: background-color 1.0s ease-in;
+	        transition: background-color 1.0s ease-in;
+}
+
+td
+{
+	padding: 2px;
+}
+
+td .blackbox
+{
+	margin: 0;
+}
+
+#addPlayer
+{
+	margin: 0;
+}
+
+#board
+{
+	z-index: 1;
+	overflow: hidden;
+}
+
+#control
+{
+	z-index: 6;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	height: 30px;
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.7);
+	background: -webkit-gradient(linear, 50% 100%, 50% 0%, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 1.0)))
+}
+
+#control div
+{
+	height: 20px;
+	margin: 5px;
+	text-shadow: 0px 0px 5px #fff;
+	line-height: 20px;
+	text-align: center;
+	
+	-webkit-transition: color 0.1s ease-in, background-color 0.1s ease-in;
+	   -moz-transition: color 0.1s ease-in, background-color 0.1s ease-in;
+	     -o-transition: color 0.1s ease-in, background-color 0.1s ease-in;
+	        transition: color 0.1s ease-in, background-color 0.1s ease-in;
+}
+
+#control #queue
+{
+	position: absolute;
+	height: 30px;
+	left: 0;
+	padding: 0;
+	margin: 0;
+}
+
+#queue .player
+{
+	position: relative;
+	color: white;
+	float: left;
+	height: 30px;
+	margin: 0;
+	line-height: 30px;
+	text-align: center;
+	text-shadow: 0px 0px 5px #000;
+	overflow: hidden;
+	
+	-webkit-box-shadow: inset 0 0 10px #000;
+	   -moz-box-shadow: inset 0 0 10px #000;
+	        box-shadow: inset 0 0 10px #000;
+}
+
+#messageBox
+{
+	color: white;
+	position: absolute;
+	right: 305px;
+	overflow: hidden;
+	padding: 5px;
+	padding-left: 15px;
+	white-space: nowrap; 
+	text-overflow: ellipsis;
+}
+
+#soundToggleButton
+{
+	position: relative;
+	float: right;
+	width: 20px;
+	height: 20px;
+}
+
+#soundToggleButton img{ cursor: pointer; }
+
+#map
+{
+	z-index: 2;
+	position: absolute;
+	padding: 10px;
+	margin-top: 40px;
+	overflow: hidden;
+}
+
+#map svg
+{
+	z-index: 4;
+}
